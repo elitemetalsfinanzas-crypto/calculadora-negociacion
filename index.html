@@ -2,12 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Negociación - Responsiva</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
-        /* Estilos existentes (sin cambios) */
         :root {
             --primary: #1e3a8a;
             --primary-light: #2563eb;
@@ -34,7 +33,6 @@
             line-height: 1.6;
             padding: 10px;
             min-height: 100vh;
-            overflow-x: hidden;
         }
         
         .container {
@@ -129,22 +127,6 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-        }
-        
-        .option-box {
-            background: #f0f6ff;
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-        }
-        
-        .option-label {
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-            display: block;
-            font-size: 0.95rem;
         }
         
         .checkbox-group {
@@ -301,10 +283,6 @@
             box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
         }
         
-        .hidden {
-            display: none !important;
-        }
-        
         .info-text {
             font-size: 0.8rem;
             color: #6b7280;
@@ -449,7 +427,6 @@
             font-weight: 600;
         }
         
-        /* Nuevos estilos para unidades de medida */
         .input-with-unit {
             display: flex;
             gap: 10px;
@@ -461,6 +438,14 @@
         
         .input-with-unit select {
             width: 80px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .usa-only {
+            display: none;
         }
         
         /* Media Queries para móviles */
@@ -483,10 +468,6 @@
             
             h2 {
                 font-size: 1.1rem;
-            }
-            
-            .option-box {
-                padding: 12px;
             }
             
             .result-value {
@@ -748,8 +729,8 @@
                         </div>
                         
                         <div class="result-card">
-                            <h3>Margen Bruto</h3>
-                            <div class="result-value" id="grossProfitMargin">0%</div>
+                            <h3>ROI</h3>
+                            <div class="result-value" id="roi">0%</div>
                         </div>
                     </div>
                     
@@ -796,7 +777,7 @@
     </div>
     
     <script id="csv-data" type="text/csv">
-PROVEEDOR;MATERIAL;TAMAÑO CONTENEDOR;FLETE MARITIMO;SALIDA;BOLIPUERTO;INTER SHIP;COMISIÓN;ORIGEN Y PUERTO;PAÍS Y PUERTO DESTINO;ACARREO;KCI;ARANCEL;FLETE MIAMI;GASTOS LOGISTICOS
+PROVEEDOR;MATERIAL;TAMAÑO CONTENEDOR;FLETE MARITIMO;SALIDA;BOLIPUERTO;INTER SHIP;COMISION;ORIGEN Y PUERTO;PAIS Y PUERTO DESTINO;ACARREO;KCI;ARANCEL;FLETE MIAMI;GASTOS LOGISTICOS
 COMERCIALIZADORA NS;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
 MUNDO ACERO;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
 COMERCIALIZADORA NS;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
@@ -933,7 +914,7 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
             directCost: document.getElementById('directCost'),
             totalInvoicing: document.getElementById('totalInvoicing'),
             grossProfit: document.getElementById('grossProfit'),
-            grossProfitMargin: document.getElementById('grossProfitMargin'),
+            roi: document.getElementById('roi'),
             idealSalePrice: document.getElementById('idealSalePrice'),
             idealPurchasePrice: document.getElementById('idealPurchasePrice')
         };
@@ -1170,7 +1151,9 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
             let totalInvoicing = isNaN(salePrice) ? 0 : tons * salePrice;
             let totalDirectCost = directCost + totalLog;
             let grossProfit = totalInvoicing - totalDirectCost;
-            let grossProfitMargin = totalInvoicing > 0 ? (grossProfit / totalInvoicing) * 100 : 0;
+            
+            // Calcular ROI
+            let roi = (directCost + totalLog) > 0 ? (grossProfit / (directCost + totalLog)) * 100 : 0;
             
             // Calcular precios ideales
             let idealSalePrice = 0, idealPurchasePrice = 0;
@@ -1211,7 +1194,7 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                 directCost, 
                 totalInvoicing, 
                 grossProfit, 
-                grossProfitMargin, 
+                roi, 
                 idealSalePrice, 
                 idealPurchasePrice 
             });
@@ -1233,7 +1216,9 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
             let totalInvoicing = isNaN(salePrice) ? 0 : tons * salePrice;
             let totalDirectCost = directCost + manualCost;
             let grossProfit = totalInvoicing - totalDirectCost;
-            let grossProfitMargin = totalInvoicing > 0 ? (grossProfit / totalInvoicing) * 100 : 0;
+            
+            // Calcular ROI
+            let roi = (directCost + manualCost) > 0 ? (grossProfit / (directCost + manualCost)) * 100 : 0;
             
             // Calcular precios ideales
             let idealSalePrice = 0, idealPurchasePrice = 0;
@@ -1258,7 +1243,7 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                 directCost, 
                 totalInvoicing, 
                 grossProfit, 
-                grossProfitMargin, 
+                roi, 
                 idealSalePrice, 
                 idealPurchasePrice 
             });
@@ -1329,7 +1314,7 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                 resultFields.directCost.textContent = '0 USD';
                 resultFields.totalInvoicing.textContent = '0 USD';
                 resultFields.grossProfit.textContent = '0 USD';
-                resultFields.grossProfitMargin.textContent = '0%';
+                resultFields.roi.textContent = '0%';
                 resultFields.idealSalePrice.textContent = '0 USD';
                 resultFields.idealPurchasePrice.textContent = '0 USD';
                 return;
@@ -1338,7 +1323,7 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
             resultFields.directCost.textContent = formatNumber(obj.directCost) + ' USD';
             resultFields.totalInvoicing.textContent = formatNumber(obj.totalInvoicing) + ' USD';
             resultFields.grossProfit.textContent = formatNumber(obj.grossProfit) + ' USD';
-            resultFields.grossProfitMargin.textContent = formatNumber(obj.grossProfitMargin) + '%';
+            resultFields.roi.textContent = formatNumber(obj.roi) + '%';
             resultFields.idealSalePrice.textContent = formatNumber(obj.idealSalePrice) + ' USD';
             resultFields.idealPurchasePrice.textContent = formatNumber(obj.idealPurchasePrice) + ' USD';
             
@@ -1347,6 +1332,13 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                 resultFields.grossProfit.className = 'result-value profit-negative';
             } else {
                 resultFields.grossProfit.className = 'result-value profit-positive';
+            }
+            
+            // Resaltar el ROI según si es positivo o negativo
+            if (obj.roi < 0) {
+                resultFields.roi.className = 'result-value profit-negative';
+            } else {
+                resultFields.roi.className = 'result-value profit-positive';
             }
         }
         
