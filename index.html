@@ -641,7 +641,7 @@
                                 <option value="LBS">LBS</option>
                             </select>
                         </div>
-                        <div class="info-text">Cada contenedor tiene capacidad para 27 toneladas</div>
+                        <div class="info-text">Cada contenedor tiene capacidad para 27.5 toneladas</div>
                     </div>
                     
                     <div class="form-group">
@@ -754,7 +754,7 @@
                         <i class="fas fa-box"></i>
                         <div>
                             <div>Se necesitan <strong id="numContainers">0</strong> contenedores para <strong id="totalQuantity">0</strong> <span id="quantityUnitLabel">TM</span></div>
-                            <div class="info-text">Cada contenedor tiene capacidad para 27 toneladas</div>
+                            <div class="info-text">Cada contenedor tiene capacidad para 27.5 toneladas</div>
                         </div>
                     </div>
                     
@@ -1173,8 +1173,8 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                 return;
             }
             
-            // Calcular número de contenedores necesarios (27 toneladas por contenedor)
-            const numContenedores = Math.ceil(tons / 27);
+            // Calcular número de contenedores necesarios (27.5 toneladas por contenedor)
+            const numContenedores = Math.ceil(tons / 27.5);
             containerInfo.classList.remove('hidden');
             numContainers.textContent = numContenedores;
             totalQuantity.textContent = formatNumber(quantity);
