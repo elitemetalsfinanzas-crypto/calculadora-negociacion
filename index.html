@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
+        /* Estilos existentes (sin cambios) */
         :root {
             --primary: #1e3a8a;
             --primary-light: #2563eb;
@@ -733,11 +734,6 @@
                             <div class="value" id="detailFleteMiami">0 USD</div>
                         </div>
                         
-                        <div class="cost-detail-item usa-only">
-                            <div class="label">Gastos Logísticos:</div>
-                            <div class="value" id="detailGastosLogisticos">0 USD</div>
-                        </div>
-                        
                         <div class="cost-detail-item highlight">
                             <div class="label">Total Costos por Contenedor:</div>
                             <div class="value" id="detailTotalCostPerContainer">0 USD</div>
@@ -845,56 +841,56 @@
     </div>
     
     <script id="csv-data" type="text/csv">
-PROVEEDOR;MATERIAL;TAMAÑO CONTENEDOR;FLETE MARITIMO;SALIDA;BOLIPUERTO;INTER SHIP;COMISION;ORIGEN Y PUERTO;PAIS Y PUERTO DESTINO;ACARREO;KCI;ARANCEL;FLETE MIAMI;GASTOS LOGISTICOS
-COMERCIALIZADORA NS;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-MUNDO ACERO;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-COMERCIALIZADORA NS;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-THE COMPANY;ACR;40HC;290;3550;500;55;50;VENEZUELA, LA GUAIRA;Port Laem Chabang, Tailandia;;;;;
-CASABLANCA;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-CASABLANCA;ALUMINIO DURO;40HC;920;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-COMERCIALIZADORA NS;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-COMERCIALIZADORA NS;ALUMINIO DURO;40HC;920;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-MULTIRECICLAJES;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-MUNDO ACERO;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-MUNDO ACERO;ALUMINIO DURO;40HC;920;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-RECIPLAST Y VALERIO;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-RECUPERADORA GUARICO;ALUMINIO DURO;40HC;1685;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Ennore, India;;;;;
-RECUPERADORA GUARICO;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-CASABLANCA;ALUMINIO T/T;40HC;1160;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Estambul, Turquia;;;;;
-COMERCIALIZADORA NS;ALUMINIO T/T;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-COMERCIALIZADORA NS;ALUMINIO T/T;40HC;945;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Nhava Sheva, India;;;;;
-RECUPERADORA GUARICO;ALUMINIO T/T;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;;
-RECUPERADORA GUARICO;ALUMINIO T/T;40HC;920;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-RECUPERADORA GUARICO;ALUMINIO T/T;40HC;1160;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Estambul, Turquia;;;;;
-CASABLANCA;COBRE;40HC;1557;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;450;1600;1950;1000
-FURIMETALES;COBRE;40HC;795;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Gaoming, China;;;;;
-FURIMETALES;COBRE;40HC;1557;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;450;1600;1950;1000
-MULTIRECICLAJES;COBRE;40HC;1557;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1600;1650;1000
-MUNDO ACERO;COBRE;40HC;1557;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1600;1600;1000
-CASABLANCA;FOIL;40HC;1556;1900;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Bilbao, España;;;;;
-ADRIAN;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-ALLOY METAL;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-CASABLANCA;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-COMERCIALIZADORA NS;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-EL PALMAR;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-FUNDICION;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-JAEM METAL;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-RECIPLAST Y VALERIO;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-RECUPERADORA GUARICO;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-THE COMPANY;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;;
-MUNDO ACERO;PAILAS DE ALUMINIO;20ST;1420;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Bilbao, España;;;;;
-MUNDO METAL;PAILAS DE ALUMINIO;20ST;1420;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Bilbao, España;;;;;
-CASABLANCA;PAILAS DE ALUMINIO;20ST;285;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Ningbo, China;;;;;
-CASABLANCA;PAILAS DE ALUMINIO;20ST;290;1900;500;55;50;VENEZUELA, LA GUAIRA;Port Laem Chabang, Tailandia;;;;;
-MUNDO METAL;PERFIL ALUM;40HC;1557;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1190;1700;1000
-CASABLANCA;PERFIL ALUM;40HC;1557;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1190;1700;1000
-METCO IMPORT;RIELES;20ST;1815;1300;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Qasim, Pakistan;;;;;
-CASABLANCA;RIN DE ALUMINIO;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1100;1600;1000
-RECUPERADORA GUARICO;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1100;1100;0
-COMERCIALIZADORA NS;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;450;1100;1900;1000
-MUNDO METAL;UBC;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Port Laem Chabang, Tailandia;;;;;
-RECUPERADORA GUARICO;UBC;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Laem Chabang, Tailandia;;;;;
-ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;450;1100;1900;1000
+PROVEEDOR;MATERIAL;TAMAÑO CONTENEDOR;FLETE MARITIMO;SALIDA;BOLIPUERTO;INTER SHIP;COMISION;ORIGEN Y PUERTO;PAIS Y PUERTO DESTINO;ACARREO;KCI;ARANCEL;FLETE MIAMI
+COMERCIALIZADORA NS;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+MUNDO ACERO;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+COMERCIALIZADORA NS;ACERO;40HC;290;2050;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+THE COMPANY;ACR;40HC;290;3550;500;55;50;VENEZUELA, LA GUAIRA;Port Laem Chabang, Tailandia;;;;
+CASABLANCA;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+CASABLANCA;ALUMINIO DURO;40HC;920;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+COMERCIALIZADORA NS;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+COMERCIALIZADORA NS;ALUMINIO DURO;40HC;920;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+MULTIRECICLAJES;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+MUNDO ACERO;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+MUNDO ACERO;ALUMINIO DURO;40HC;920;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+RECIPLAST Y VALERIO;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+RECUPERADORA GUARICO;ALUMINIO DURO;40HC;1685;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Ennore, India;;;;
+RECUPERADORA GUARICO;ALUMINIO DURO;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+CASABLANCA;ALUMINIO T/T;40HC;1160;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Estambul, Turquia;;;;
+COMERCIALIZADORA NS;ALUMINIO T/T;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+COMERCIALIZADORA NS;ALUMINIO T/T;40HC;945;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Nhava Sheva, India;;;;
+RECUPERADORA GUARICO;ALUMINIO T/T;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Kaohsiung, Taiwan;;;;
+RECUPERADORA GUARICO;ALUMINIO T/T;40HC;920;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+RECUPERADORA GUARICO;ALUMINIO T/T;40HC;1160;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Estambul, Turquia;;;;
+CASABLANCA;COBRE;40HC;2432;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;450;1600;1950
+FURIMETALES;COBRE;40HC;795;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Gaoming, China;;;;
+FURIMETALES;COBRE;40HC;2432;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;450;1600;1950
+MULTIRECICLAJES;COBRE;40HC;2432;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1600;1650
+MUNDO ACERO;COBRE;40HC;2432;11500;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1600;1600
+CASABLANCA;FOIL;40HC;1556;1900;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Bilbao, España;;;;
+ADRIAN;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+ALLOY METAL;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+CASABLANCA;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+COMERCIALIZADORA NS;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+EL PALMAR;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+FUNDICION;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+JAEM METAL;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+RECIPLAST Y VALERIO;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+RECUPERADORA GUARICO;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+THE COMPANY;HIERRO;20ST;730;1000;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Mundra, India;;;;
+MUNDO ACERO;PAILAS DE ALUMINIO;20ST;1420;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Bilbao, España;;;;
+MUNDO METAL;PAILAS DE ALUMINIO;20ST;1420;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Bilbao, España;;;;
+CASABLANCA;PAILAS DE ALUMINIO;20ST;285;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Ningbo, China;;;;
+CASABLANCA;PAILAS DE ALUMINIO;20ST;290;1900;500;55;50;VENEZUELA, LA GUAIRA;Port Laem Chabang, Tailandia;;;;
+MUNDO METAL;PERFIL ALUM;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1190;1700
+CASABLANCA;PERFIL ALUM;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1190;1700
+METCO IMPORT;RIELES;20ST;1815;1300;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Qasim, Pakistan;;;;
+CASABLANCA;RIN DE ALUMINIO;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1100;1600
+RECUPERADORA GUARICO;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;400;1100;1100
+COMERCIALIZADORA NS;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;450;1100;1900
+MUNDO METAL;UBC;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Port Laem Chabang, Tailandia;;;;
+RECUPERADORA GUARICO;UBC;40HC;290;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Laem Chabang, Tailandia;;;;
+ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Estados Unidos;550;450;1100;1900
     </script>
     
     <script>
@@ -974,7 +970,6 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
             kci: document.getElementById('detailKci'),
             arancel: document.getElementById('detailArancel'),
             fleteMiami: document.getElementById('detailFleteMiami'),
-            gastosLogisticos: document.getElementById('detailGastosLogisticos'),
             totalCostPerContainer: document.getElementById('detailTotalCostPerContainer')
         };
         
@@ -1078,8 +1073,8 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                             obj[cleanKey] = clean(row[k]);
                         }
                         
-                        // Convertir campos numéricos
-                        ['FLETE MARITIMO', 'SALIDA', 'BOLIPUERTO', 'INTER SHIP', 'COMISION', 'ACARREO', 'KCI', 'ARANCEL', 'FLETE MIAMI', 'GASTOS LOGISTICOS'].forEach(
+                        // Convertir campos numéricos (eliminado GASTOS LOGISTICOS)
+                        ['FLETE MARITIMO', 'SALIDA', 'BOLIPUERTO', 'INTER SHIP', 'COMISION', 'ACARREO', 'KCI', 'ARANCEL', 'FLETE MIAMI'].forEach(
                             fld => obj[fld] = toNumber(obj[fld]));
                         return obj;
                     });
@@ -1195,7 +1190,6 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
             let kci = isUSA ? toNumber(match['KCI']) : 0;
             let arancel = isUSA ? toNumber(match['ARANCEL']) : 0;
             let fleteMiami = isUSA ? toNumber(match['FLETE MIAMI']) : 0;
-            let gastosLogisticos = isUSA ? toNumber(match['GASTOS LOGISTICOS']) : 0;
             
             // Calcular costo de recogida por contenedor
             let pickupCostPerContainer = 0;
@@ -1203,8 +1197,8 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                 pickupCostPerContainer = (prov === 'COMERCIALIZADORA NS') ? 250 : 500;
             }
             
-            // Calcular costos logísticos por contenedor
-            let logisticCostPerContainer = fleteMaritimo + salida + bolipuerto + interShip + comision + acarreo + kci + arancel + fleteMiami + gastosLogisticos + pickupCostPerContainer;
+            // Calcular costos logísticos por contenedor (eliminado GASTOS LOGISTICOS)
+            let logisticCostPerContainer = fleteMaritimo + salida + bolipuerto + interShip + comision + acarreo + kci + arancel + fleteMiami + pickupCostPerContainer;
             calculatedLogisticCost = logisticCostPerContainer * numContenedores;
             
             // Si hay un costo manual, usarlo en lugar del calculado
@@ -1253,7 +1247,6 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                 kci,
                 arancel,
                 fleteMiami,
-                gastosLogisticos,
                 logisticCostPerContainer,
                 isUSA
             });
@@ -1370,7 +1363,6 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
             detailFields.kci.textContent = formatNumber(obj.kci) + ' USD';
             detailFields.arancel.textContent = formatNumber(obj.arancel) + ' USD';
             detailFields.fleteMiami.textContent = formatNumber(obj.fleteMiami) + ' USD';
-            detailFields.gastosLogisticos.textContent = formatNumber(obj.gastosLogisticos) + ' USD';
             detailFields.totalCostPerContainer.textContent = formatNumber(obj.logisticCostPerContainer) + ' USD';
             
             costDetails.classList.remove('hidden');
@@ -1454,8 +1446,8 @@ ELITE;UBC;40HC;2432;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de Everglades, Es
                             obj[cleanKey] = clean(row[k]);
                         }
                         
-                        // Convertir campos numéricos
-                        ['FLETE MARITIMO', 'SALIDA', 'BOLIPUERTO', 'INTER SHIP', 'COMISION', 'ACARREO', 'KCI', 'ARANCEL', 'FLETE MIAMI', 'GASTOS LOGISTICOS'].forEach(
+                        // Convertir campos numéricos (eliminado GASTOS LOGISTICOS)
+                        ['FLETE MARITIMO', 'SALIDA', 'BOLIPUERTO', 'INTER SHIP', 'COMISION', 'ACARREO', 'KCI', 'ARANCEL', 'FLETE MIAMI'].forEach(
                             fld => obj[fld] = toNumber(obj[fld]));
                         return obj;
                     });
