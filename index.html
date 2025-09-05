@@ -154,9 +154,41 @@
             margin-bottom: 8px;
         }
         
-        .checkbox-group input {
-            width: auto;
-            transform: scale(1.2);
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 2px solid #cbd5e0;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .checkbox-group input[type="checkbox"]:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .checkbox-group input[type="checkbox"]:checked::after {
+            content: "✓";
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: 500;
         }
         
         button {
@@ -767,7 +799,7 @@
                     </div>
                     
                     <div class="summary-item">
-                        <div class="label">Costo Logístico por Tonelada:</div>
+                        <div class="label" id="labelLogisticCostPerUnit">Costo Logístico por Tonelada:</div>
                         <div class="value highlight" id="summaryLogisticCostPerTon">N/A</div>
                     </div>
                 </div>
@@ -934,6 +966,9 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
             return `${day}/${month}/${year} ${hours}:${minutes}`;
         }
         
+        // Constante para conversión de libras a toneladas
+        const LBS_TO_TM = 2204.62; // 1 tonelada métrica = 2204.62 libras
+        
         // Seleccionar elementos del DOM
         const selects = {
             material: document.getElementById('material'),
@@ -944,6 +979,7 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
         
         const pickupByProviderCheckbox = document.getElementById('pickupByProvider');
         const costDetails = document.getElementById('costDetails');
+        const labelLogisticCostPerUnit = document.getElementById('labelLogisticCostPerUnit');
 
         const inputs = {
             quantity: document.getElementById('quantity'),
@@ -1032,9 +1068,14 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
         function convertToTons(quantity, unit) {
             if (unit === 'LBS') {
                 // Convertir libras a toneladas (1 tonelada = 2204.62 libras)
-                return quantity / 2204.62;
+                return quantity / LBS_TO_TM;
             }
             return quantity; // Ya está en toneladas
+        }
+        
+        // Convertir toneladas a libras
+        function convertToLbs(tons) {
+            return tons * LBS_TO_TM;
         }
         
         // Actualizar base de datos local
@@ -1112,6 +1153,8 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
         // Event listener para el cambio de unidad
         selects.quantityUnit.addEventListener('change', function() {
             quantityUnitLabel.textContent = this.value;
+            // Actualizar el label de costo logístico por unidad
+            labelLogisticCostPerUnit.textContent = 'Costo Logístico por ' + this.value + ':';
             clearResults();
         });
         
@@ -1156,7 +1199,7 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
                 return;
             }
             
-            // Convertir a toneladas para cálculos
+            // Convertir a toneladas para cálculo de contenedores
             const tons = convertToTons(quantity, unit);
             
             // Buscar coincidencia en los datos
@@ -1210,26 +1253,33 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
             const manualCost = parseFloat(inputs.manualLogisticCost.value);
             const totalLog = !isNaN(manualCost) && manualCost > 0 ? manualCost : calculatedLogisticCost;
             
-            // Calcular costo por tonelada
-            let logisticCostPerTon = tons > 0 ? totalLog / tons : 0;
+            // Calcular costo por unidad según la unidad seleccionada
+            let logisticCostPerUnit;
+            if (unit === 'LBS') {
+                // Convertir el costo total a costo por libra
+                logisticCostPerUnit = totalLog / quantity;
+            } else {
+                // TM - costo por tonelada
+                logisticCostPerUnit = totalLog / tons;
+            }
             
             // Calcular costos directos y utilidad
-            let directCost = tons * (isNaN(purchasePrice) ? 0 : purchasePrice);
-            let totalInvoicing = isNaN(salePrice) ? 0 : tons * salePrice;
+            let directCost = quantity * (isNaN(purchasePrice) ? 0 : purchasePrice);
+            let totalInvoicing = isNaN(salePrice) ? 0 : quantity * salePrice;
             let totalDirectCost = directCost + totalLog;
             let grossProfit = totalInvoicing - totalDirectCost;
             
             // Calcular ROI
-            let roi = (directCost + totalLog) > 0 ? (grossProfit / (directCost + totalLog)) * 100 : 0;
+            let roi = totalDirectCost > 0 ? (grossProfit / totalDirectCost) * 100 : 0;
             
             // Calcular precios ideales
             let idealSalePrice = 0, idealPurchasePrice = 0;
             if (!isNaN(profitMargin) && profitMargin !== 0) {
-                const costoPorTon = (isNaN(purchasePrice) ? 0 : purchasePrice) + logisticCostPerTon;
-                idealSalePrice = costoPorTon / (1 - profitMargin/100);
+                const costoPorUnidad = (isNaN(purchasePrice) ? 0 : purchasePrice) + logisticCostPerUnit;
+                idealSalePrice = costoPorUnidad / (1 - profitMargin/100);
                 
                 if (!isNaN(salePrice) && salePrice > 0) {
-                    idealPurchasePrice = salePrice - logisticCostPerTon - (salePrice * profitMargin/100);
+                    idealPurchasePrice = salePrice - logisticCostPerUnit - (salePrice * profitMargin/100);
                 }
             }
             
@@ -1238,7 +1288,8 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
                 proveedor: match['PROVEEDOR'],
                 destino: match['PAIS Y PUERTO DESTINO'],
                 totalLog,
-                logisticCostPerTon
+                logisticCostPerUnit,
+                unit
             });
             
             updateDetailFields({
@@ -1272,28 +1323,36 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
         function recalculateWithManualCost(manualCost) {
             if (!lastMatch) return;
             
-            const { tons, purchasePrice, salePrice, profitMargin } = lastMatch;
+            const { quantity, unit, purchasePrice, salePrice, profitMargin } = lastMatch;
             
-            // Calcular costo por tonelada
-            let logisticCostPerTon = tons > 0 ? manualCost / tons : 0;
+            // Calcular costo por unidad según la unidad seleccionada
+            let logisticCostPerUnit;
+            if (unit === 'LBS') {
+                // Convertir el costo total a costo por libra
+                logisticCostPerUnit = manualCost / quantity;
+            } else {
+                // TM - costo por tonelada
+                const tons = convertToTons(quantity, unit);
+                logisticCostPerUnit = manualCost / tons;
+            }
             
             // Calcular costos directos y utilidad
-            let directCost = tons * (isNaN(purchasePrice) ? 0 : purchasePrice);
-            let totalInvoicing = isNaN(salePrice) ? 0 : tons * salePrice;
+            let directCost = quantity * (isNaN(purchasePrice) ? 0 : purchasePrice);
+            let totalInvoicing = isNaN(salePrice) ? 0 : quantity * salePrice;
             let totalDirectCost = directCost + manualCost;
             let grossProfit = totalInvoicing - totalDirectCost;
             
             // Calcular ROI
-            let roi = (directCost + manualCost) > 0 ? (grossProfit / (directCost + manualCost)) * 100 : 0;
+            let roi = totalDirectCost > 0 ? (grossProfit / totalDirectCost) * 100 : 0;
             
             // Calcular precios ideales
             let idealSalePrice = 0, idealPurchasePrice = 0;
             if (!isNaN(profitMargin) && profitMargin !== 0) {
-                const costoPorTon = (isNaN(purchasePrice) ? 0 : purchasePrice) + logisticCostPerTon;
-                idealSalePrice = costoPorTon / (1 - profitMargin/100);
+                const costoPorUnidad = (isNaN(purchasePrice) ? 0 : purchasePrice) + logisticCostPerUnit;
+                idealSalePrice = costoPorUnidad / (1 - profitMargin/100);
                 
                 if (!isNaN(salePrice) && salePrice > 0) {
-                    idealPurchasePrice = salePrice - logisticCostPerTon - (salePrice * profitMargin/100);
+                    idealPurchasePrice = salePrice - logisticCostPerUnit - (salePrice * profitMargin/100);
                 }
             }
             
@@ -1302,7 +1361,8 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
                 proveedor: lastMatch['PROVEEDOR'],
                 destino: lastMatch['PAIS Y PUERTO DESTINO'],
                 totalLog: manualCost,
-                logisticCostPerTon
+                logisticCostPerUnit,
+                unit: lastMatch.unit
             });
             
             updateResultFields({ 
@@ -1319,7 +1379,7 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
         
         // Actualizar campos del resumen
         function updateSummaryFields(obj) {
-            containerInfo.classList.toggle('hidden', !obj || obj.tons <= 0);
+            containerInfo.classList.toggle('hidden', !obj || obj.quantity <= 0);
             
             if (!obj) {
                 for (let field in summaryFields) {
@@ -1331,7 +1391,7 @@ RECUPERADORA GUARICO;UBC;40HC;300;1750;500;55;50;VENEZUELA, LA GUAIRA;Puerto de 
             summaryFields.provider.textContent = obj.proveedor || 'N/A';
             summaryFields.destination.textContent = obj.destino || 'N/A';
             summaryFields.totalLogisticCost.textContent = formatNumber(obj.totalLog) + ' USD';
-            summaryFields.logisticCostPerTon.textContent = formatNumber(obj.logisticCostPerTon) + ' USD';
+            summaryFields.logisticCostPerTon.textContent = formatNumber(obj.logisticCostPerUnit) + ' USD/' + (obj.unit || 'TM');
         }
         
         // Actualizar campos de detalles de costos
